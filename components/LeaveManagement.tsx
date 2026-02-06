@@ -17,8 +17,21 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ requests, onSubmit })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.startDate || !formData.endDate || !formData.reason) return;
-    onSubmit(formData);
+    // 기본적인 빈 값 체크
+    if (!formData.startDate || !formData.endDate || !formData.reason) {
+      alert('모든 필드를 입력해주세요.');
+      return;
+    }
+    
+    // 부모 컴포넌트의 핸들러 호출
+    onSubmit({
+      type: formData.type,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      reason: formData.reason,
+    });
+    
+    // 폼 초기화
     setFormData({ type: 'Annual', startDate: '', endDate: '', reason: '' });
   };
 
@@ -30,6 +43,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ requests, onSubmit })
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">휴가 종류</label>
             <select
+              required
               value={formData.type}
               onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
@@ -44,6 +58,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ requests, onSubmit })
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2">시작일</label>
               <input
+                required
                 type="date"
                 value={formData.startDate}
                 onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
@@ -53,6 +68,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ requests, onSubmit })
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2">종료일</label>
               <input
+                required
                 type="date"
                 value={formData.endDate}
                 onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
@@ -63,6 +79,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ requests, onSubmit })
           <div className="md:col-span-2">
             <label className="block text-sm font-semibold text-slate-700 mb-2">사유</label>
             <textarea
+              required
               rows={3}
               placeholder="상세 사유를 입력하세요"
               value={formData.reason}
@@ -83,7 +100,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ requests, onSubmit })
 
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="p-6 border-b border-slate-100">
-          <h2 className="text-lg font-bold text-slate-800">신청 현황</h2>
+          <h2 className="text-lg font-bold text-slate-800">나의 신청 현황</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
