@@ -1,0 +1,7 @@
+{
+  "name": "Copy of ZenWork Attendance & HR Portal",
+  "description": "A comprehensive corporate attendance and HR management system featuring real-time check-ins, leave requests, and AI-powered productivity insights.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
